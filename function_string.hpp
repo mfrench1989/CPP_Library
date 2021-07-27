@@ -51,11 +51,12 @@ double stringToNum(const std::string&);
 /**
  * @brief stringClean - remove comments and white spaces from a string
  * @param string - string to clean
+ * @param bool - flag for trimming leading/trailing white spaces
  * @param bool - flag for removing comments
- * @param bool - flag for removing white spaces
+ * @param bool - flag for removing all white spaces
  * @return
  */
-std::string stringClean(std::string, const bool, const bool);
+std::string stringClean(std::string, const bool, const bool, const bool);
 
 /**
  * @brief stringColor - convert RGB values (0-255) to hex color

@@ -74,19 +74,29 @@ double stringToNum(const std::string& string_in) {
   }
 }
 
-std::string stringClean(std::string string_text, const bool flag_comment, const bool flag_space) {
+std::string stringClean(std::string string_text, const bool flag_trim, const bool flag_comment, const bool flag_space) {
+  /*Remove leading/trailing white spaces from string*/
+  if (flag_trim) {
+      /*Trim leading white spaces*/
+      string_text.erase(string_text.begin(), std::find_if(string_text.begin(), string_text.end(),
+                                                          [](unsigned char ch) {return !std::isspace(ch);}));
+
+      /*Trim trailing white spaces*/
+      string_text.erase(std::find_if(string_text.rbegin(), string_text.rend(),
+                                     [](unsigned char ch) {return !std::isspace(ch);}).base(), string_text.end());
+    }
   /*Remove comment from string*/
   if (flag_comment && string_text.find(DELIMITER_COMMENT) != std::string::npos) {
       string_text.resize(string_text.find(DELIMITER_COMMENT));
     }
-  /*Remove white spaces from string*/
+  /*Remove all white spaces from string*/
   if (flag_space) {
       /*Get the end of the string or the start of comments section to iterate up to*/
       std::string::iterator string_end = string_text.find(DELIMITER_COMMENT) == std::string::npos ?
             string_text.end() : string_text.begin() + string_text.find(DELIMITER_COMMENT);
 
-      string_text.erase(std::remove_if(string_text.begin(), string_end, [](char c) {
-          return std::isspace<char>(c, std::locale::classic());}), string_end);
+      string_text.erase(std::remove_if(string_text.begin(), string_end, [](char ch) {
+          return std::isspace<char>(ch, std::locale::classic());}), string_end);
     }
   return string_text;
 }
@@ -150,7 +160,7 @@ std::string stringReplace(std::string string_source, const std::string& string_f
 
 std::string stringToLower(std::string string_text) {
   /*Got this from stackOverflow, it works beautifully but not entirely sure how*/
-  std::transform(string_text.begin(), string_text.end(), string_text.begin(), [](unsigned char c){return std::tolower(c);});
+  std::transform(string_text.begin(), string_text.end(), string_text.begin(), [](unsigned char ch){return std::tolower(ch);});
   return string_text;
 }
 
