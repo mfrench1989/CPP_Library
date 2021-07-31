@@ -89,8 +89,8 @@ std::vector<std::string> dirList(const std::string&);
 /**
  * @brief fileClean - clean file of comments, white space characters, and empty lines
  * @param vector<string> - file vector to clean
- * @param bool - remove leading/trailing white spaces
  * @param bool - remove comments
+ * @param bool - remove leading/trailing white spaces
  * @param bool - remove all white spaces
  * @param bool - remove empty lines
  * @return
@@ -148,13 +148,8 @@ std::vector<std::string> fileSectionReplace(std::vector<std::string>, const std:
  * @param vector<string> - file vector to sort
  * @return
  */
-std::vector<std::string> fileSectionSort(std::vector<std::string>);
-
+std::vector<std::string> fileSectionSort(const std::vector<std::string>&);
 
 //archive file? this should probably be a separate function set for including the 7 zip sdk stuff?
-
-//get value of string (same as find index except returns line without find-string)
-
-//sort section?
 
 #endif // FUNCTIONFILE_HPP

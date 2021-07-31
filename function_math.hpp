@@ -4,15 +4,6 @@
 #include <vector>
 
 /**
- * @brief mathDistanceLinear - N-dimensional distance calculation, returns success or failure of calculation
- * @param vector<double> - position 1
- * @param vector<double> - position 2
- * @param double - distance out value
- * @return
- */
-bool mathDistanceLinear(const std::vector<double>&, const std::vector<double>&, double&);
-
-/**
  * @brief mathBinaryToNum - convert vector of bool binary value to integer (positive only), index 0 == least significant
  * @param vector<bool> - binary value in vector form
  * @return
@@ -33,7 +24,15 @@ double mathAverage(const std::vector<double>&);
  * @param double - modulus value for repeating positions (0 == 360)
  * @return
  */
-double mathDistanceAngle(const double, const double, const double);
+double mathDistanceAngular(const double, const double, const double);
+
+/**
+ * @brief mathDistanceLinear - N-dimensional distance calculation
+ * @param vector<double> - position 1
+ * @param vector<double> - position 2
+ * @return
+ */
+double mathDistanceLinear(const std::vector<double>&, const std::vector<double>&);
 
 /**
  * @brief mathModulus - calculate the modulus of a value, option to return as positive only
@@ -60,18 +59,18 @@ double mathNearestAngle(double, const double, const double);
 double mathPi();
 
 /**
- * @brief mathToRadian - calculate radian from a degree
- * @param double - degree value to convert
- * @return
- */
-double mathToRadian(const double);
-
-/**
  * @brief mathToDegree - calculate degree from a radian
  * @param double - radian value to convert
  * @return
  */
 double mathToDegree(const double);
+
+/**
+ * @brief mathToRadian - calculate radian from a degree
+ * @param double - degree value to convert
+ * @return
+ */
+double mathToRadian(const double);
 
 /**
  * @brief mathNumToBinary - calculate a binary vector value from a passed integer (positive only), index 0 == least significant

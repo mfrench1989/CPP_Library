@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -6,7 +7,7 @@
 
 #include "function_file.hpp"
 
-#define NUMBER_ERROR -1
+#define FILE_ERROR -1
 
 void dirCreate(const std::string& dir_path) {
   /*Ensure dir_path is not an empty string*/
@@ -37,6 +38,11 @@ void fileWrite(const std::string& file_path, const std::vector<std::string>& vec
   std::ofstream file_out(file_path, std::ios_base::trunc);
   for (const std::string& string_line : vector_file) {
       file_out << string_line;
+
+      /*Write new line character only if not the last line*/
+      if (&string_line != &vector_file.back()) {
+          file_out << std::endl;
+        }
     }
   file_out.close();
 }
@@ -71,15 +77,15 @@ int fileIndexOf(const std::vector<std::string>& vector_file, const std::vector<s
   /*If nested sections update index_current and index_end*/
   if (!vector_section.empty()) {
       /*Get index_current and check if error*/
-      if ((index_current = fileSectionStart(vector_file, vector_section)) == NUMBER_ERROR) {
-          return NUMBER_ERROR;
+      if ((index_current = fileSectionStart(vector_file, vector_section)) == FILE_ERROR) {
+          return FILE_ERROR;
         }
       /*Returned value is section start, move to first index of section*/
       ++index_current;
 
       /*Get index_end and check if error*/
-      if ((index_end = fileSectionEndOf(vector_file, index_current)) == NUMBER_ERROR) {
-          return NUMBER_ERROR;
+      if ((index_end = fileSectionEndOf(vector_file, index_current)) == FILE_ERROR) {
+          return FILE_ERROR;
         }
     }
 
@@ -94,11 +100,11 @@ int fileIndexOf(const std::vector<std::string>& vector_file, const std::vector<s
       /*Found section header, skip over section*/
       /*Get index_current and check if error*/
       if (string_file.find(SECTION_HEAD) == 0 && string_file != SECTION_END &&
-          (index_current = fileSectionEndOf(vector_file, index_current + 1)) == NUMBER_ERROR) {
-          return NUMBER_ERROR;
+          (index_current = fileSectionEndOf(vector_file, index_current + 1)) == FILE_ERROR) {
+          return FILE_ERROR;
         }
     }
-  return NUMBER_ERROR;
+  return FILE_ERROR;
 }
 
 int fileSectionEndOf(const std::vector<std::string>& vector_file, int index_current) {
@@ -113,11 +119,11 @@ int fileSectionEndOf(const std::vector<std::string>& vector_file, int index_curr
       /*Found section header, skip over section*/
       /*Get index_current and check if error*/
       if (string_file.find(SECTION_HEAD) == 0 && string_file != SECTION_END &&
-          (index_current = fileSectionEndOf(vector_file, index_current + 1)) == NUMBER_ERROR) {
-          return NUMBER_ERROR;
+          (index_current = fileSectionEndOf(vector_file, index_current + 1)) == FILE_ERROR) {
+          return FILE_ERROR;
         }
     }
-  return NUMBER_ERROR;
+  return FILE_ERROR;
 }
 
 int fileSectionStart(const std::vector<std::string>& vector_file, const std::vector<std::string>& vector_section) {
@@ -140,21 +146,21 @@ int fileSectionStart(const std::vector<std::string>& vector_file, const std::vec
                   /*Increment index to avoid catching previous section header on next pass*/
                   ++index_current;
                   /*Get index_end and check if error*/
-                  if ((index_end = fileSectionEndOf(vector_file, index_current)) == NUMBER_ERROR) {
-                      return NUMBER_ERROR;
+                  if ((index_end = fileSectionEndOf(vector_file, index_current)) == FILE_ERROR) {
+                      return FILE_ERROR;
                     }
                   /*Break to go to next in vector_section*/
                   break;
                 }
               /*Section header is NOT string_section, skip over section*/
               /*Get index_current and check if error*/
-              if ((index_current = fileSectionEndOf(vector_file, index_current + 1)) == NUMBER_ERROR) {
-                  return NUMBER_ERROR;
+              if ((index_current = fileSectionEndOf(vector_file, index_current + 1)) == FILE_ERROR) {
+                  return FILE_ERROR;
                 }
             }
         }
     }
-  return NUMBER_ERROR;
+  return FILE_ERROR;
 }
 
 int fileSectionStartOf(const std::vector<std::string>& vector_file, int index_current) {
@@ -169,11 +175,11 @@ int fileSectionStartOf(const std::vector<std::string>& vector_file, int index_cu
       /*Found section end, skip over section*/
       /*Get index_current and check if error*/
       if (string_file == SECTION_END &&
-          (index_current = fileSectionStartOf(vector_file, index_current - 1)) == NUMBER_ERROR) {
-          return NUMBER_ERROR;
+          (index_current = fileSectionStartOf(vector_file, index_current - 1)) == FILE_ERROR) {
+          return FILE_ERROR;
         }
     }
-  return NUMBER_ERROR;
+  return FILE_ERROR;
 }
 
 std::vector<std::string> dirList(const std::string& dir_path) {
@@ -186,12 +192,12 @@ std::vector<std::string> dirList(const std::string& dir_path) {
   return vector_out;
 }
 
-std::vector<std::string> fileClean(std::vector<std::string> vector_file, const bool flag_trim, const bool flag_comment,
+std::vector<std::string> fileClean(std::vector<std::string> vector_file, const bool flag_comment, const bool flag_trim,
                                    const bool flag_space, const bool flag_empty) {
   for (int i = 0; i < static_cast<int>(vector_file.size()); ++i) {
       /*Remove leading/trailing white spaces, comments, and internal white spaces from line*/
-      if (flag_trim || flag_comment || flag_space) {
-          vector_file[i] = stringClean(vector_file.at(i), flag_trim, flag_comment, flag_space);
+      if (flag_comment|| flag_trim || flag_space ) {
+          vector_file[i] = stringClean(vector_file.at(i), flag_comment, flag_trim, flag_space);
         }
       /*Remove empty lines*/
       if (flag_empty && vector_file.at(i).empty()) {
@@ -204,26 +210,23 @@ std::vector<std::string> fileClean(std::vector<std::string> vector_file, const b
 
 std::vector<std::string> fileFormat(std::vector<std::string> vector_file) {
   /*Clean vector_file from leading/trailing spaces and empty lines*/
-  vector_file = fileClean(vector_file, true, false, false, true);
+  vector_file = fileClean(vector_file, false, true, false, true);
 
   /*Format vector_file with appropriate tabs and empty lines*/
   int tabs = 0;
   for (int i = 0; i < static_cast<int>(vector_file.size()); ++i) {
-      /*Insert empty line before section header if index not zero*/
-      if (i != 0 && vector_file.at(i).find(SECTION_HEAD) == 0 && vector_file.at(i) != SECTION_END) {
-          vector_file.insert(vector_file.begin() + i, "\n");
-          ++i;
-        }
       /*Found SECTION_END, update tabs*/
-      if (vector_file.at(i) == SECTION_END) {
+      if (stringClean(vector_file.at(i), true, true, true) == SECTION_END) {
           --tabs;
+          vector_file.insert(vector_file.begin() + i + 1, std::string());
         }
       /*Format line with tabs*/
       for (int j = 0; j < tabs; ++j) {
           vector_file[i].insert(0, "\t");
         }
       /*Found SECTION_HEAD, update tabs*/
-      if (stringClean(vector_file.at(i), true, false, false).find(SECTION_HEAD) == 0) {
+      if (stringClean(vector_file.at(i), true, true, true).find(SECTION_HEAD) == 0 &&
+          stringClean(vector_file.at(i), true, true, true) != SECTION_END) {
           ++tabs;
         }
     }
@@ -264,24 +267,20 @@ std::vector<std::string> fileSection(const std::vector<std::string>& vector_file
   /*If nested sections update index_current and index_end*/
   if (!vector_section.empty()) {
       /*Get index_current and check if error*/
-      if ((index_current = fileSectionStart(vector_file, vector_section)) == NUMBER_ERROR) {
+      if ((index_current = fileSectionStart(vector_file, vector_section)) == FILE_ERROR) {
           return std::vector<std::string>();
         }
       /*Returned value is section start, move to first index of section*/
       ++index_current;
 
       /*Get index_end and check if error*/
-      if ((index_end = fileSectionEndOf(vector_file, index_current)) == NUMBER_ERROR) {
+      if ((index_end = fileSectionEndOf(vector_file, index_current)) == FILE_ERROR) {
           return std::vector<std::string>();
         }
     }
 
-  /*Format vector_out with all lines between index_current and index_end*/
-  std::vector<std::string> vector_out;
-  for (; index_current < index_end; ++index_current) {
-      vector_out.push_back(vector_file.at(index_current));
-    }
-  return vector_out;
+  /*Return all lines between index_current and index_end*/
+  return std::vector<std::string>(vector_file.begin() + index_current, vector_file.begin() + index_end);
 }
 
 std::vector<std::string> fileSectionList(const std::vector<std::string>& vector_file) {
@@ -290,10 +289,10 @@ std::vector<std::string> fileSectionList(const std::vector<std::string>& vector_
       /*Clean file strings to ensure matches for section checks*/
       std::string string_file = stringClean(vector_file.at(i), true, true, true);
       /*Found section head*/
-      if (string_file.find(SECTION_HEAD) && string_file != SECTION_END) {
+      if (string_file.find(SECTION_HEAD) == 0 && string_file != SECTION_END) {
           vector_out.push_back(stringReplace(vector_file.at(i), SECTION_HEAD, std::string()));
           /*Get index_current of end of section and check if error*/
-          if ((i = fileSectionEndOf(vector_file, i + 1)) == NUMBER_ERROR) {
+          if ((i = fileSectionEndOf(vector_file, i + 1)) == FILE_ERROR) {
               return std::vector<std::string>();
             }
         }
@@ -309,14 +308,14 @@ std::vector<std::string> fileSectionReplace(std::vector<std::string> vector_file
   /*If nested sections update index_current and index_end*/
   if (!vector_section.empty()) {
       /*Get index_current and check if error*/
-      if ((index_current = fileSectionStart(vector_file, vector_section)) == NUMBER_ERROR) {
+      if ((index_current = fileSectionStart(vector_file, vector_section)) == FILE_ERROR) {
           return std::vector<std::string>();
         }
       /*Returned value is section start, move to first index of section*/
       ++index_current;
 
       /*Get index_end and check if error*/
-      if ((index_end = fileSectionEndOf(vector_file, index_current)) == NUMBER_ERROR) {
+      if ((index_end = fileSectionEndOf(vector_file, index_current)) == FILE_ERROR) {
           return std::vector<std::string>();
         }
     }
@@ -330,5 +329,20 @@ std::vector<std::string> fileSectionReplace(std::vector<std::string> vector_file
 }
 
 
-std::vector<std::string> fileSectionSort(std::vector<std::string> vector_file) {
+std::vector<std::string> fileSectionSort(const std::vector<std::string>& vector_file) {
+  /*Get list of sections in vector_file*/
+  std::vector<std::string> vector_sections = fileSectionList(vector_file);
+
+  /*Sort vector_sections to alphabetical order*/
+  std::sort(vector_sections.begin(), vector_sections.end(), stringIsAlphabetic);
+
+  /*Format vector_out with reordered vector_sections*/
+  std::vector<std::string> vector_out;
+  for (const std::string& string_section : vector_sections) {
+      vector_out.push_back(SECTION_HEAD + string_section);
+      std::vector<std::string> vector_temp = fileSection(vector_file, {string_section});
+      vector_out.insert(vector_out.end(), vector_temp.begin(), vector_temp.end());
+      vector_out.push_back(SECTION_END);
+    }
+  return vector_out;
 }

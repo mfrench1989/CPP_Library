@@ -10,10 +10,9 @@
  * @brief stringIsAlphabetic - compare alphabetical order of strings
  * @param string - first string to compare
  * @param string - second string to compare
- * @param bool - case sensetive flag
  * @return
  */
-bool stringIsAlphabetic(const std::string&, const std::string&, const bool);
+bool stringIsAlphabetic(const std::string&, const std::string&);
 
 /**
  * @brief stringIsMatch - match string to pattern containing wildcards.
@@ -21,6 +20,7 @@ bool stringIsAlphabetic(const std::string&, const std::string&, const bool);
  * '?' matches any one character
  * @param char* - pattern to match against
  * @param char* - string to compare
+ * @param bool - case sensitive flag
  * @return
  */
 bool stringIsMatch(const char*, const char*);
@@ -51,9 +51,9 @@ double stringToNum(const std::string&);
 /**
  * @brief stringClean - remove comments and white spaces from a string
  * @param string - string to clean
- * @param bool - flag for trimming leading/trailing white spaces
- * @param bool - flag for removing comments
- * @param bool - flag for removing all white spaces
+ * @param bool - remove comments
+ * @param bool - remove leading/trailing white spaces
+ * @param bool - remove all white spaces
  * @return
  */
 std::string stringClean(std::string, const bool, const bool, const bool);

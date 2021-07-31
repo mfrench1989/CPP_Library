@@ -6,13 +6,8 @@
 
 #include "function_string.hpp"
 
-bool stringIsAlphabetic(const std::string& string_1, const std::string& string_2, const bool case_sensitive) {
-  if (case_sensitive) {
-      return static_cast<bool>(string_1 < string_2);
-    }
-  else {
-      return static_cast<bool>(stringToLower(string_1) < stringToLower(string_2));
-    }
+bool stringIsAlphabetic(const std::string& string_1, const std::string& string_2) {
+  return static_cast<bool>(stringToLower(string_1) < stringToLower(string_2));
 }
 
 bool stringIsMatch(const char* pattern_in, const char* string_in) {
@@ -74,7 +69,11 @@ double stringToNum(const std::string& string_in) {
   }
 }
 
-std::string stringClean(std::string string_text, const bool flag_trim, const bool flag_comment, const bool flag_space) {
+std::string stringClean(std::string string_text, const bool flag_comment, const bool flag_trim, const bool flag_space) {
+  /*Remove comment from string*/
+  if (flag_comment && string_text.find(DELIMITER_COMMENT) != std::string::npos) {
+      string_text.resize(string_text.find(DELIMITER_COMMENT));
+    }
   /*Remove leading/trailing white spaces from string*/
   if (flag_trim) {
       /*Trim leading white spaces*/
@@ -84,10 +83,6 @@ std::string stringClean(std::string string_text, const bool flag_trim, const boo
       /*Trim trailing white spaces*/
       string_text.erase(std::find_if(string_text.rbegin(), string_text.rend(),
                                      [](unsigned char ch) {return !std::isspace(ch);}).base(), string_text.end());
-    }
-  /*Remove comment from string*/
-  if (flag_comment && string_text.find(DELIMITER_COMMENT) != std::string::npos) {
-      string_text.resize(string_text.find(DELIMITER_COMMENT));
     }
   /*Remove all white spaces from string*/
   if (flag_space) {

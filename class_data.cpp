@@ -1,5 +1,7 @@
 #include "class_data.hpp"
 
+#define DATA_ERROR -1
+
 ClassData::ClassData() {
 }
 
@@ -20,7 +22,7 @@ int ClassData::dataIndex(const std::string& label_in) {
           return i;
         }
     }
-  return -1;
+  return DATA_ERROR;
 }
 
 std::string ClassData::dataLabel(const int index_in) {
