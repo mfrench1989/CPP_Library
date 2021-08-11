@@ -26,10 +26,10 @@ double mathDistanceAngular(const double pos_1, const double pos_2, const double 
 }
 
 double mathDistanceLinear(const std::vector<double>& pos_1, const std::vector<double>& pos_2) {
-  double value_out = 0.0;
   if (pos_1.size() != pos_2.size()) {
-      return value_out;
+      return std::numeric_limits<double>::quiet_NaN();
     }
+  double value_out = 0.0;
   for (int i = 0; i < static_cast<int>(pos_1.size()); ++i) {
       value_out += std::pow(pos_2.at(i) - pos_1.at(i), 2.0);
     }
@@ -45,7 +45,8 @@ double mathModulus(const double value_in, const double modulus, const bool norma
 }
 
 double mathNearestAngle(double pos_target, const double pos_current, const double modulus) {
-  pos_target = mathModulus(pos_target, modulus, false);
+  /*Get pos_target close to pos_current, this limits while loops for large numbers*/
+  pos_target = mathModulus(pos_target, modulus, false) + (modulus * std::round(pos_current / modulus));
   while (pos_target - pos_current < -1.0 * modulus / 2.0) {
       pos_target += modulus;
     }
