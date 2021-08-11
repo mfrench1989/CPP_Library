@@ -1,13 +1,13 @@
-#ifndef CLASSDATA_HPP
-#define CLASSDATA_HPP
+#ifndef OBJECTDATA_HPP
+#define OBJECTDATA_HPP
 
 #include <string>
 #include <vector>
 
-class ClassData {
+class ObjectData {
 
 public:
-  ClassData();
+  ObjectData();
 
   /**
    * @brief dataClear - clear stored data
@@ -62,4 +62,4 @@ private:
   std::vector<Data> Vector_Data;
 };
 
-#endif // CLASSDATA_HPP
+#endif // OBJECTDATA_HPP
