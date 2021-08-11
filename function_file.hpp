@@ -70,14 +70,14 @@ int fileSectionEndOf(const std::vector<std::string>&, int);
  * @param vector<string> - nested section vector
  * @return
  */
-int fileSectionStart(const std::vector<std::string>&, const std::vector<std::string>&);
+int fileSectionHead(const std::vector<std::string>&, const std::vector<std::string>&);
 /**
  * @brief fileSectionHeadOf - find the start of the section starting from current index
  * @param vector<string> - file vector
  * @param int - current index, should not be a section end
  * @return
  */
-int fileSectionStartOf(const std::vector<std::string>&, int);
+int fileSectionHeadOf(const std::vector<std::string>&, int);
 
 /**
  * @brief dirList - return a list of directories

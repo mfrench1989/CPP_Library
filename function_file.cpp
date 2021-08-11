@@ -77,7 +77,7 @@ int fileIndexOf(const std::vector<std::string>& vector_file, const std::vector<s
   /*If nested sections update index_current and index_end*/
   if (!vector_section.empty()) {
       /*Get index_current and check if error*/
-      if ((index_current = fileSectionStart(vector_file, vector_section)) == FILE_ERROR) {
+      if ((index_current = fileSectionHead(vector_file, vector_section)) == FILE_ERROR) {
           return FILE_ERROR;
         }
       /*Returned value is section start, move to first index of section*/
@@ -126,7 +126,7 @@ int fileSectionEndOf(const std::vector<std::string>& vector_file, int index_curr
   return FILE_ERROR;
 }
 
-int fileSectionStart(const std::vector<std::string>& vector_file, const std::vector<std::string>& vector_section) {
+int fileSectionHead(const std::vector<std::string>& vector_file, const std::vector<std::string>& vector_section) {
   int index_current = 0;
   int index_end = vector_file.size();
 
@@ -163,7 +163,7 @@ int fileSectionStart(const std::vector<std::string>& vector_file, const std::vec
   return FILE_ERROR;
 }
 
-int fileSectionStartOf(const std::vector<std::string>& vector_file, int index_current) {
+int fileSectionHeadOf(const std::vector<std::string>& vector_file, int index_current) {
   /*Iterate through vector_file to find SECTION_HEAD*/
   for (; index_current >= 0; --index_current) {
       /*Clean file strings to ensure matches*/
@@ -175,7 +175,7 @@ int fileSectionStartOf(const std::vector<std::string>& vector_file, int index_cu
       /*Found section end, skip over section*/
       /*Get index_current and check if error*/
       if (string_file == SECTION_END &&
-          (index_current = fileSectionStartOf(vector_file, index_current - 1)) == FILE_ERROR) {
+          (index_current = fileSectionHeadOf(vector_file, index_current - 1)) == FILE_ERROR) {
           return FILE_ERROR;
         }
     }
@@ -267,7 +267,7 @@ std::vector<std::string> fileSection(const std::vector<std::string>& vector_file
   /*If nested sections update index_current and index_end*/
   if (!vector_section.empty()) {
       /*Get index_current and check if error*/
-      if ((index_current = fileSectionStart(vector_file, vector_section)) == FILE_ERROR) {
+      if ((index_current = fileSectionHead(vector_file, vector_section)) == FILE_ERROR) {
           return std::vector<std::string>();
         }
       /*Returned value is section start, move to first index of section*/
@@ -308,7 +308,7 @@ std::vector<std::string> fileSectionReplace(std::vector<std::string> vector_file
   /*If nested sections update index_current and index_end*/
   if (!vector_section.empty()) {
       /*Get index_current and check if error*/
-      if ((index_current = fileSectionStart(vector_file, vector_section)) == FILE_ERROR) {
+      if ((index_current = fileSectionHead(vector_file, vector_section)) == FILE_ERROR) {
           return std::vector<std::string>();
         }
       /*Returned value is section start, move to first index of section*/
