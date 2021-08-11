@@ -59,13 +59,22 @@ double stringToNum(const std::string&);
 std::string stringClean(std::string, const bool, const bool, const bool);
 
 /**
- * @brief stringColor - convert RGB values (0-255) to hex color
- * @param int - red color value
- * @param int - green color value
- * @param int - blue color value
+ * @brief stringColorHSL - convert HSL values to hex color
+ * @param double - hue (0-360)
+ * @param double - saturation (0-100)
+ * @param double - luminosity (0-100)
  * @return
  */
-std::string stringColor(const int, const int, const int);
+std::string stringColorHSL(const double, const double, const double);
+
+/**
+ * @brief stringColorRGB - convert RGB values to hex color
+ * @param int - red color value (0-255)
+ * @param int - green color value (0-255)
+ * @param int - blue color value (0-255)
+ * @return
+ */
+std::string stringColorRGB(const int, const int, const int);
 
 /**
  * @brief stringGetComment - returns the comment portion of a string

@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cxxabi.h>
 #include <iomanip>
+#include <math.h>
 #include <sstream>
 
 #include "function_string.hpp"
@@ -97,7 +98,50 @@ std::string stringClean(std::string string_text, const bool flag_comment, const 
   return string_text;
 }
 
-std::string stringColor(const int red, const int green, const int blue) {
+std::string stringColorHSL(const double hue, const double saturation, const double luminosity) {
+  /*Convert HSL values to RGB*/
+  double s = saturation/100;
+  double v = luminosity/100;
+  double C = s * v;
+  double X = C * (1-std::abs(std::fmod(hue / 60.0, 2) - 1));
+  double m = v - C;
+  int red, green, blue;
+  if (hue >= 0 && hue < 60) {
+      red = static_cast<int>((C + m) * 255);
+      green = static_cast<int>((X + m) * 255);
+      blue = static_cast<int>(m * 255);
+  }
+  else if (hue >= 60 && hue < 120) {
+      red = static_cast<int>((X + m) * 255);
+      green = static_cast<int>((C + m) * 255);
+      blue = static_cast<int>(m * 255);
+  }
+  else if (hue >= 120 && hue < 180) {
+      red = static_cast<int>(m * 255);
+      green = static_cast<int>((C + m) * 255);
+      blue = static_cast<int>((X + m) * 255);
+  }
+  else if (hue >= 180 && hue < 240) {
+      red = static_cast<int>(m * 255);
+      green = static_cast<int>((X + m) * 255);
+      blue = static_cast<int>((C + m) * 255);
+  }
+  else if (hue >= 240 && hue < 300) {
+      red = static_cast<int>((X + m) * 255);
+      green = static_cast<int>(m * 255);
+      blue = static_cast<int>((C + m) * 255);
+  }
+  else {
+      red = static_cast<int>((C + m) * 255);
+      green = static_cast<int>(m * 255);
+      blue = static_cast<int>((X + m) * 255);
+  }
+
+  /*Get Hex from RGB*/
+  return stringColorRGB(red, blue, green);
+}
+
+std::string stringColorRGB(const int red, const int green, const int blue) {
   std::stringstream string_out;
   string_out << "#";
   string_out << std::hex << (red << 16 | green << 8 | blue);
