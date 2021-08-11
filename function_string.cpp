@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cstring>
+#include <cxxabi.h>
 #include <iomanip>
 #include <sstream>
 
@@ -64,8 +65,8 @@ double stringToNum(const std::string& string_in) {
     return std::stod(string_in);
   }
   catch (...) {
-    /*Return 0.0 if string is not number*/
-    return 0.0;
+    /*Return nan if string is not number*/
+    return std::numeric_limits<double>::quiet_NaN();
   }
 }
 
@@ -116,6 +117,19 @@ std::string stringDateTime(const std::string& string_format) {
   std::stringstream time_stream;
   time_stream << std::put_time(std::localtime(&current_time), string_format.c_str());
   return time_stream.str();
+}
+
+std::string stringDemangle(const char* string_in) {
+  /*Arbitrary value to eliminate compiler warning*/
+  int status = -4;
+
+  /*Enable c++11 by passing the flag -std=c++11 to g++*/
+  std::unique_ptr<char, void(*)(void*)> res {
+      abi::__cxa_demangle(string_in, NULL, NULL, &status),
+      std::free
+  };
+
+  return std::string((status==0) ? res.get() : string_in);
 }
 
 std::string stringHTML(std::string string_text, const std::string& color_in, const bool flag_bold) {

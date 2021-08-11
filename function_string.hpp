@@ -82,6 +82,13 @@ std::string stringComment(std::string);
 std::string stringDateTime(const std::string&);
 
 /**
+ * @brief stringDemangle - used to demangle the class typeid name to something human readable
+ * @param char - string from typeid(class).name()
+ * @return
+ */
+std::string stringDemangle(const char*);
+
+/**
  * @brief stringHTML - format string for HTML rich text
  * @param string - string to format
  * @param string - hex string for color
@@ -136,5 +143,15 @@ std::vector<char> structToBytes(void*, const int);
  * @return
  */
 std::vector<std::string> stringSplit(const std::string&, const std::string&);
+
+/**
+ * @brief stringFuncInfo - get function info
+ * @param StringT - class template to get the class of calling function
+ * @param char - function name from "__func__"
+ * @return
+ */
+template <class StringT> std::string stringFuncInfo(const StringT& string_t, const char* string_func) {
+  return stringDemangle(typeid(string_t).name()) + "::" + std::string(string_func);
+}
 
 #endif // FUNCTIONSTRING_HPP
