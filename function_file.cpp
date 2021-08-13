@@ -24,7 +24,7 @@ void fileAppend(const std::string& file_path, const std::string& string_append) 
 
   /*Open file for appending*/
   std::ofstream file_out(file_path, std::ios_base::app);
-  file_out << string_append;
+  file_out << string_append << std::endl;
   file_out.close();
 }
 
