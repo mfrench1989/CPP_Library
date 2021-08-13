@@ -100,11 +100,9 @@ std::string stringClean(std::string string_text, const bool flag_comment, const 
 
 std::string stringColorHSL(const double hue, const double saturation, const double luminosity) {
   /*Convert HSL values to RGB*/
-  double s = saturation/100;
-  double v = luminosity/100;
-  double C = s * v;
-  double X = C * (1-std::abs(std::fmod(hue / 60.0, 2) - 1));
-  double m = v - C;
+  double C = (1.0 - std::fabs(2.0 * luminosity / 100.0 - 1.0)) * (saturation / 100.0);
+  double X = C * (1.0 - std::fabs(std::fmod(hue / 60.0, 2.0) - 1.0));
+  double m = (luminosity / 100.0) - (C / 2.0);
   int red, green, blue;
   if (hue >= 0 && hue < 60) {
       red = static_cast<int>((C + m) * 255);
@@ -138,13 +136,15 @@ std::string stringColorHSL(const double hue, const double saturation, const doub
   }
 
   /*Get Hex from RGB*/
-  return stringColorRGB(red, blue, green);
+  return stringColorRGB(red, green, blue);
 }
 
 std::string stringColorRGB(const int red, const int green, const int blue) {
   std::stringstream string_out;
   string_out << "#";
-  string_out << std::hex << (red << 16 | green << 8 | blue);
+  string_out << std::setfill('0') << std::setw(2) << std::hex << red;
+  string_out << std::setfill('0') << std::setw(2) << std::hex << green;
+  string_out << std::setfill('0') << std::setw(2) << std::hex << blue;
   return string_out.str();
 }
 
