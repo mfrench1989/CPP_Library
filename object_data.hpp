@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#define DATA_ERROR -1
+
 class ObjectData {
 
 public:

@@ -7,8 +7,6 @@
 
 #include "function_file.hpp"
 
-#define FILE_ERROR -1
-
 void dirCreate(const std::string& dir_path) {
   /*Ensure dir_path is not an empty string*/
   if (!dir_path.empty()) {

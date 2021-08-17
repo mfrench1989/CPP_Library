@@ -1,7 +1,5 @@
 #include "object_data.hpp"
 
-#define DATA_ERROR -1
-
 ObjectData::ObjectData() {
 }
 

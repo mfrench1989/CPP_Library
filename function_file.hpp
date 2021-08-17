@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#define FILE_ERROR -1
 #define SECTION_END "#END"
 #define SECTION_HEAD "#"
 
