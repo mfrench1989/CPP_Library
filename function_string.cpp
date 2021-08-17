@@ -177,6 +177,8 @@ std::string stringDemangle(const char* string_in) {
 }
 
 std::string stringHTML(std::string string_text, const std::string& color_in, const bool flag_bold) {
+  string_text = stringReplace(string_text, "<", "&lt;");
+  string_text = stringReplace(string_text, ">", "&gt;");
   string_text = stringReplace(string_text, "\n", "<br>");
   if (!color_in.empty()) {
       string_text.insert(0, "<font color = " + color_in + ">");
