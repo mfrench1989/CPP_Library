@@ -94,7 +94,7 @@ int fileIndexOf(const std::vector<std::string>& vector_file, const std::vector<s
           return index_current;
         }
       /*Clean file strings to ensure matches for section checks*/
-      std::string string_file = stringClean(vector_file.at(index_current), true, true, true);
+      std::string string_file = stringClean(vector_file.at(index_current), true, true, false);
       /*Found section header, skip over section*/
       /*Get index_current and check if error*/
       if (string_file.find(SECTION_HEAD) == 0 && string_file != SECTION_END &&
@@ -109,7 +109,7 @@ int fileSectionEndOf(const std::vector<std::string>& vector_file, int index_curr
   /*Iterate through vector_file to find SECTION_END*/
   for (; index_current < static_cast<int>(vector_file.size()); ++index_current) {
       /*Clean file strings to ensure matches*/
-      std::string string_file = stringClean(vector_file.at(index_current), true, true, true);
+      std::string string_file = stringClean(vector_file.at(index_current), true, true, false);
       /*Found SECTION_END*/
       if (string_file == SECTION_END) {
           return index_current;
@@ -132,11 +132,11 @@ int fileSectionHead(const std::vector<std::string>& vector_file, const std::vect
   for (const std::string& string_section : vector_section) {
       for (; index_current < index_end; ++index_current) {
           /*Clean file strings to ensure matches*/
-          std::string string_file = stringClean(vector_file.at(index_current), true, true, true);
+          std::string string_file = stringClean(vector_file.at(index_current), true, true, false);
           /*Found section header*/
           if (string_file.find(SECTION_HEAD) == 0 && string_file != SECTION_END) {
               /*Section header is string_section*/
-              if (vector_file.at(index_current) == std::string(SECTION_HEAD) + string_section) {
+              if (string_file == std::string(SECTION_HEAD) + string_section) {
                   /*string_section is last section, return index*/
                   if (&string_section == &vector_section.back()) {
                       return index_current;
@@ -165,7 +165,7 @@ int fileSectionHeadOf(const std::vector<std::string>& vector_file, int index_cur
   /*Iterate through vector_file to find SECTION_HEAD*/
   for (; index_current >= 0; --index_current) {
       /*Clean file strings to ensure matches*/
-      std::string string_file = stringClean(vector_file.at(index_current), true, true, true);
+      std::string string_file = stringClean(vector_file.at(index_current), true, true, false);
       /*Found SECTION_HEAD*/
       if (string_file.find(SECTION_HEAD) == 0 && string_file != SECTION_END ) {
           return index_current;
@@ -214,7 +214,7 @@ std::vector<std::string> fileFormat(std::vector<std::string> vector_file) {
   int tabs = 0;
   for (int i = 0; i < static_cast<int>(vector_file.size()); ++i) {
       /*Found SECTION_END, update tabs*/
-      if (stringClean(vector_file.at(i), true, true, true) == SECTION_END) {
+      if (stringClean(vector_file.at(i), true, true, false) == SECTION_END) {
           --tabs;
           vector_file.insert(vector_file.begin() + i + 1, std::string());
         }
@@ -223,8 +223,8 @@ std::vector<std::string> fileFormat(std::vector<std::string> vector_file) {
           vector_file[i].insert(0, "\t");
         }
       /*Found SECTION_HEAD, update tabs*/
-      if (stringClean(vector_file.at(i), true, true, true).find(SECTION_HEAD) == 0 &&
-          stringClean(vector_file.at(i), true, true, true) != SECTION_END) {
+      if (stringClean(vector_file.at(i), true, true, false).find(SECTION_HEAD) == 0 &&
+          stringClean(vector_file.at(i), true, true, false) != SECTION_END) {
           ++tabs;
         }
     }
@@ -285,7 +285,7 @@ std::vector<std::string> fileSectionList(const std::vector<std::string>& vector_
   std::vector<std::string> vector_out;
   for (int i = 0; i < static_cast<int>(vector_file.size()); ++i) {
       /*Clean file strings to ensure matches for section checks*/
-      std::string string_file = stringClean(vector_file.at(i), true, true, true);
+      std::string string_file = stringClean(vector_file.at(i), true, true, false);
       /*Found section head*/
       if (string_file.find(SECTION_HEAD) == 0 && string_file != SECTION_END) {
           vector_out.push_back(stringReplace(vector_file.at(i), SECTION_HEAD, std::string()));
