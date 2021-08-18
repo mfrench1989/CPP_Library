@@ -3,11 +3,6 @@
 
 #include "Eigen/Eigen"
 
-/*================ NOTES ================*/
-/*The current frame is base*/
-/*The other frame is object*/
-/*=======================================*/
-
 /**
  * @brief eigenQuaternion - calculate the quaternion of a 3x3 rotation matrix
  * @param Matrix3d - rotation matrix
@@ -23,10 +18,10 @@ Eigen::Quaterniond eigenQuaternion(const Eigen::Matrix3d&);
 Eigen::Vector3d eigenCentroid(const Eigen::Matrix3Xd&);
 
 /**
- * @brief eigenCoordTransform - transform a coordinate from base frame to object frame
- * @param Matrix3d - rotation matrix of base -> object frame
- * @param Vector3d - translation vector of base -> object frame
- * @param Vector3d - coordinates in base frame
+ * @brief eigenCoordTransform - transform a coordinate from current to other coord frame
+ * @param Matrix3d - rotation matrix of current -> other frame
+ * @param Vector3d - translation vector of current -> other frame
+ * @param Vector3d - coordinates in current frame
  * @return
  */
 Eigen::Vector3d eigenCoordTransform(const Eigen::Matrix3d&, const Eigen::Vector3d&, const Eigen::Vector3d&);
@@ -49,17 +44,17 @@ Eigen::Vector3d eigenToSpherical(const Eigen::Vector3d&);
 
 /**
  * @brief eigenTranslation - calculate the coordinate frame translation
- * @param Matrix3Xd - matrix of xyz coordinate vectors in base coordinate frame
- * @param Matrix3Xd - matrix of xyz vectors of equivalent position in coordinate frame
- * @param Matrix3d - rotation matrix of coordinate frame
+ * @param Matrix3Xd - matrix of xyz coordinate vectors in current coord frame
+ * @param Matrix3Xd - matrix of xyz vectors of equivalent position in other coord frame
+ * @param Matrix3d - current coord frame rotation matrix
  * @return
  */
 Eigen::Vector3d eigenTranslation(const Eigen::Matrix3Xd&, const Eigen::Matrix3Xd&, const Eigen::Matrix3d&);
 
 /**
- * @brief eigenTransposeTranslation - convert translation for opposite direction transformation
- * @param Matrix3d - rotation matrix of original transformation
- * @param Vector3d - translation vector of original transformation
+ * @brief eigenTransposeTranslation - convert current coord frame transform to other coord frame transform
+ * @param Matrix3d - current coord frame rotation matrix
+ * @param Vector3d - current coord frame translation vector
  * @return
  */
 Eigen::Vector3d eigenTransposeTranslation(const Eigen::Matrix3d&, const Eigen::Vector3d&);
@@ -72,9 +67,9 @@ Eigen::Vector3d eigenTransposeTranslation(const Eigen::Matrix3d&, const Eigen::V
 Eigen::Matrix3d eigenRotation(const Eigen::Quaterniond&);
 
 /**
- * @brief eigenRotation - calculate least squares fit rotation matrix to convert from one matrix to the other using any number of XYZ vectors
- * @param Matrix3Xd - matrix of XYZ vectors in original base coordinate frame
- * @param Matrix3Xd - matrix of XYZ vectors in equivalent object coordinate frame
+ * @brief eigenRotation - calculate least squares fit rotation matrix for current coord frame to other coord frame
+ * @param Matrix3Xd - matrix of XYZ vectors in current coord frame
+ * @param Matrix3Xd - matrix of XYZ vectors in other coord frame
  * @return
  */
 Eigen::Matrix3d eigenRotation(const Eigen::Matrix3Xd&, const Eigen::Matrix3Xd&);
