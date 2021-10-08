@@ -81,6 +81,15 @@ int fileSectionHead(const std::vector<std::string>&, const std::vector<std::stri
 int fileSectionHeadOf(const std::vector<std::string>&, int);
 
 /**
+ * @brief fileValueOf - returns the value of pattern string
+ * @param vector<string> - file vector
+ * @param vector<string> - nested section vector
+ * @param string - pattern string
+ * @return
+ */
+std::string fileValueOf(const std::vector<std::string>&, const std::vector<std::string>&, const std::string&);
+
+/**
  * @brief dirList - return a list of directories
  * @param string - directory path
  * @return

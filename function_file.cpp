@@ -180,6 +180,17 @@ int fileSectionHeadOf(const std::vector<std::string>& vector_file, int index_cur
   return FILE_ERROR;
 }
 
+std::string fileValueOf(const std::vector<std::string>& vector_file, const std::vector<std::string>& vector_section, const std::string& index_pattern) {
+  int index = fileIndexOf(vector_file, vector_section, index_pattern);
+  if (index == FILE_ERROR) {
+      return std::string();
+    }
+
+  std::string string_out = vector_file.at(index);
+  string_out.erase(0, sizeof(index_pattern));
+  return string_out;
+}
+
 std::vector<std::string> dirList(const std::string& dir_path) {
   std::vector<std::string> vector_out;
   for (const auto& file : std::filesystem::directory_iterator(dir_path)) {
