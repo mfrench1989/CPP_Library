@@ -246,7 +246,8 @@ std::vector<std::string> fileFormat(std::vector<std::string> vector_file) {
         }
 
       /*Found SECTION_HEAD, update tabs*/
-      if (vector_file.at(i).find(SECTION_HEAD) == 0 && vector_file.at(i) != SECTION_END) {
+      if (stringClean(vector_file.at(i), true, true).find(SECTION_HEAD) == 0 &&
+          stringClean(vector_file.at(i), true, true) != SECTION_END) {
           ++tabs;
         }
     }
@@ -325,11 +326,12 @@ std::vector<std::string> fileReplaceSection(std::vector<std::string> vector_file
   /*Format vector_file with all sections in vector_section*/
   for (unsigned int i = 0; i < vector_section.size(); ++i) {
       /*Check if header is missing*/
-      if (fileSectionHead(vector_file, std::vector(vector_section.begin() + i, vector_section.end())) == FILE_ERROR) {
+      if (fileSectionHead(vector_file, std::vector(vector_section.begin(), vector_section.begin() + i + 1)) == FILE_ERROR) {
           /*Get index to insert missing section*/
           int index_current = vector_file.size();
           if (i != 0) {
-              index_current = fileSectionHead(vector_file, std::vector(vector_section.begin() + i - 1, vector_section.end()));
+              index_current = fileSectionHead(vector_file, std::vector(vector_section.begin(), vector_section.begin() + i)) + 1;
+              index_current = fileSectionEndOf(vector_file, index_current);
             }
 
           /*Insert missing section*/
