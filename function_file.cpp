@@ -84,10 +84,10 @@ int fileIndexOf(const std::vector<std::string>& vector_file, const std::vector<s
       if ((index_end = fileSectionEndOf(vector_file, index_head + 1)) == FILE_ERROR) {
           return FILE_ERROR;
         }
-    }
 
-  /*Increment index_head to inside section*/
-  ++index_head;
+      /*Increment index_head to inside section*/
+      ++index_head;
+    }
 
   /*Iterate through vector_file attempting to find index_pattern*/
   for (; index_head < index_end; ++index_head) {
