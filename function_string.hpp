@@ -56,7 +56,7 @@ double stringToNum(const std::string&);
  * @param bool - remove all white spaces
  * @return
  */
-std::string stringClean(std::string, const bool, const bool, const bool);
+std::string stringClean(std::string, const bool, const bool
 
 /**
  * @brief stringColorHSL - convert HSL values to hex color

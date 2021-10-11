@@ -71,7 +71,7 @@ double stringToNum(const std::string& string_in) {
   }
 }
 
-std::string stringClean(std::string string_text, const bool flag_comment, const bool flag_trim, const bool flag_space) {
+std::string stringClean(std::string string_text, const bool flag_comment, const bool flag_space) {
   /*Remove comment from string*/
   if (flag_comment && string_text.find(DELIMITER_COMMENT) != std::string::npos) {
       string_text.resize(string_text.find(DELIMITER_COMMENT));

@@ -40,7 +40,7 @@ bool fileCopy(const std::string&, const std::string&);
  * @brief fileDeleteAll - delete all files matching the pattern string
  * @return
  */
-bool fileDeleteAll(const std::string&, const std::string&);
+bool fileDelete(const std::string&, const std::string&);
 
 /**
  * @brief fileExists - check if file exists
@@ -105,7 +105,7 @@ std::vector<std::string> dirList(const std::string&);
  * @param bool - remove empty lines
  * @return
  */
-std::vector<std::string> fileClean(std::vector<std::string>, const bool, const bool, const bool, const bool);
+std::vector<std::string> fileClean(std::vector<std::string>, const bool, const bool, const bool);
 
 /**
  * @brief fileFormat - format file with appropriate tabbing
@@ -113,6 +113,14 @@ std::vector<std::string> fileClean(std::vector<std::string>, const bool, const b
  * @return
  */
 std::vector<std::string> fileFormat(std::vector<std::string>);
+
+/**
+ * @brief fileSection - get all the lines of a nested section
+ * @param vector<string> - file vector
+ * @param vector<string> - nested section vector
+ * @return
+ */
+std::vector<std::string> fileGetSection(const std::vector<std::string>&, const std::vector<std::string>&);
 
 /**
  * @brief fileList - get a list of files with that match the pattern string
@@ -123,6 +131,13 @@ std::vector<std::string> fileFormat(std::vector<std::string>);
 std::vector<std::string> fileList(const std::string&, const std::string&);
 
 /**
+ * @brief fileListSection - get a list of sections within vector, will not show nested sections
+ * @param vector<string> - file vector to get list of
+ * @return
+ */
+std::vector<std::string> fileListSection(const std::vector<std::string>&);
+
+/**
  * @brief fileRead - read file line by line into a vector of strings
  * @param string - path to file
  * @return
@@ -130,35 +145,20 @@ std::vector<std::string> fileList(const std::string&, const std::string&);
 std::vector<std::string> fileRead(const std::string&);
 
 /**
- * @brief fileSection - get all the lines of a nested section
- * @param vector<string> - file vector
- * @param vector<string> - nested section vector
- * @return
- */
-std::vector<std::string> fileSection(const std::vector<std::string>&, const std::vector<std::string>&);
-
-/**
- * @brief fileSectionList - get a list of sections within vector, will not show nested sections
- * @param vector<string> - file vector to get list of
- * @return
- */
-std::vector<std::string> fileSectionList(const std::vector<std::string>&);
-
-/**
- * @brief fileSectionReplace - replace all lines in nested section
+ * @brief fileReplaceSection - replace all lines in nested section
  * @param vector<string> - file vector
  * @param vector<string> - nested section vector
  * @param vector<string> - replace vector
  * @return
  */
-std::vector<std::string> fileSectionReplace(std::vector<std::string>, const std::vector<std::string>&, const std::vector<std::string>&);
+std::vector<std::string> fileReplaceSection(std::vector<std::string>, const std::vector<std::string>&, const std::vector<std::string>&);
 
 /**
- * @brief fileSectionSort - sort file sections to alphabetical order, does not sort nested sections
+ * @brief fileSort - sort file sections to alphabetical order, does not sort nested sections
  * @param vector<string> - file vector to sort
  * @return
  */
-std::vector<std::string> fileSectionSort(const std::vector<std::string>&);
+std::vector<std::string> fileSort(const std::vector<std::string>&);
 
 //archive file? this should probably be a separate function set for including the 7 zip sdk stuff?
 
