@@ -76,16 +76,6 @@ std::string stringClean(std::string string_text, const bool flag_comment, const 
   if (flag_comment && string_text.find(DELIMITER_COMMENT) != std::string::npos) {
       string_text.resize(string_text.find(DELIMITER_COMMENT));
     }
-  /*Remove leading/trailing white spaces from string*/
-  if (flag_trim) {
-      /*Trim leading white spaces*/
-      string_text.erase(string_text.begin(), std::find_if(string_text.begin(), string_text.end(),
-                                                          [](unsigned char ch) {return !std::isspace(ch);}));
-
-      /*Trim trailing white spaces*/
-      string_text.erase(std::find_if(string_text.rbegin(), string_text.rend(),
-                                     [](unsigned char ch) {return !std::isspace(ch);}).base(), string_text.end());
-    }
   /*Remove all white spaces from string*/
   if (flag_space) {
       /*Get the end of the string or the start of comments section to iterate up to*/
