@@ -7,6 +7,8 @@
 #define FILE_ERROR -1
 #define SECTION_END "#END"
 #define SECTION_HEAD "#"
+#define SECTION_END_OLD "}" //TODO: Old style sections, delete when possible
+#define SECTION_START_OLD "{" //TODO: Old style sections, delete when possible
 
 /**
  * @brief dirCreate - create directory and subdirectories specified by path
@@ -145,6 +147,15 @@ std::vector<std::string> fileListSection(const std::vector<std::string>&);
 std::vector<std::string> fileRead(const std::string&);
 
 /**
+ * @brief fileReplace - single pass, replace all instances of a substring within each string
+ * @param std::vector<std::string> - vecter to iterate through and replace strings
+ * @param string - string to find and replace
+ * @param string - string to replace the found string with
+ * @return
+ */
+std::vector<std::string> fileReplace(std::vector<std::string>, const std::string&, const std::string&);
+
+/**
  * @brief fileReplaceSection - replace all lines in nested section
  * @param vector<string> - file vector
  * @param vector<string> - nested section vector
@@ -159,6 +170,20 @@ std::vector<std::string> fileReplaceSection(std::vector<std::string>, const std:
  * @return
  */
 std::vector<std::string> fileSort(const std::vector<std::string>&);
+
+
+
+//TODO: Old style sections, delete when possible
+int fileIndexOf_OLD(const std::vector<std::string>&, const std::vector<std::string>&, const std::string&);
+int fileSectionEndOf_OLD(const std::vector<std::string>&, int);
+int fileSectionHead_OLD(const std::vector<std::string>&, const std::vector<std::string>&);
+int fileSectionHeadOf_OLD(const std::vector<std::string>&, int);
+std::string fileValueOf_OLD(const std::vector<std::string>&, const std::vector<std::string>&, const std::string&);
+std::vector<std::string> fileFormat_OLD(std::vector<std::string>);
+std::vector<std::string> fileGetSection_OLD(const std::vector<std::string>&, const std::vector<std::string>&);
+std::vector<std::string> fileListSection_OLD(const std::vector<std::string>&);
+std::vector<std::string> fileReplaceSection_OLD(std::vector<std::string>, const std::vector<std::string>&, const std::vector<std::string>&);
+std::vector<std::string> fileSort_OLD(const std::vector<std::string>&);
 
 //archive file? this should probably be a separate function set for including the 7 zip sdk stuff?
 
