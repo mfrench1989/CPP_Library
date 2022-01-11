@@ -7,8 +7,6 @@
 #define FILE_ERROR -1
 #define SECTION_END "#END"
 #define SECTION_HEAD "#"
-#define SECTION_END_OLD "}" //TODO: Old style sections, delete when possible
-#define SECTION_START_OLD "{" //TODO: Old style sections, delete when possible
 
 /**
  * @brief dirCreate - create directory and subdirectories specified by path
