@@ -171,20 +171,6 @@ std::vector<std::string> fileReplaceSection(std::vector<std::string>, const std:
  */
 std::vector<std::string> fileSort(const std::vector<std::string>&);
 
-
-
-//TODO: Old style sections, delete when possible
-int fileIndexOf_OLD(const std::vector<std::string>&, const std::vector<std::string>&, const std::string&);
-int fileSectionEndOf_OLD(const std::vector<std::string>&, int);
-int fileSectionHead_OLD(const std::vector<std::string>&, const std::vector<std::string>&);
-int fileSectionHeadOf_OLD(const std::vector<std::string>&, int);
-std::string fileValueOf_OLD(const std::vector<std::string>&, const std::vector<std::string>&, const std::string&);
-std::vector<std::string> fileFormat_OLD(std::vector<std::string>);
-std::vector<std::string> fileGetSection_OLD(const std::vector<std::string>&, const std::vector<std::string>&);
-std::vector<std::string> fileListSection_OLD(const std::vector<std::string>&);
-std::vector<std::string> fileReplaceSection_OLD(std::vector<std::string>, const std::vector<std::string>&, const std::vector<std::string>&);
-std::vector<std::string> fileSort_OLD(const std::vector<std::string>&);
-
 //archive file? this should probably be a separate function set for including the 7 zip sdk stuff?
 
 #endif // FUNCTIONFILE_HPP
