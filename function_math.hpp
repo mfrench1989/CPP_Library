@@ -59,6 +59,12 @@ double mathNearestAngle(double, const double, const double);
 double mathPi();
 
 /**
+ * @brief mathStandardDeviation - calculate the standard deviation of the vector
+ * @return
+ */
+double mathStandardDeviation(const std::vector<double>&);
+
+/**
  * @brief mathToDegree - calculate degree from a radian
  * @param double - radian value to convert
  * @return

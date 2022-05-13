@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <math.h>
+#include <numeric>
 
 #include "function_math.hpp"
 
@@ -11,12 +13,7 @@ int mathBinaryToNum(const std::vector<bool>& vector_in) {
 }
 
 double mathAverage(const std::vector<double>& vector_in) {
-  double value_out = 0.0;
-  for (const double value_in : vector_in) {
-      value_out += value_in;
-    }
-  value_out /= static_cast<double>(vector_in.size());
-  return value_out;
+  return std::accumulate(vector_in.begin(), vector_in.end(), 0.0) / static_cast<double>(vector_in.size());
 }
 
 double mathDistanceAngular(const double pos_1, const double pos_2, const double modulus) {
@@ -58,6 +55,20 @@ double mathNearestAngle(double pos_target, const double pos_current, const doubl
 
 double mathPi() {
   return static_cast<double>(atan(1.0) * 4.0);
+}
+
+double mathStandardDeviation(const std::vector<double>& vector_in) {
+  if (vector_in.empty()) {
+      return 0.0;
+    }
+
+  double sample_mean = mathAverage(vector_in);
+
+  std::vector<double> vector_diff(vector_in.size());
+  std::transform(vector_in.begin(), vector_in.end(), vector_diff.begin(), [sample_mean](double x) {return x - sample_mean;});
+
+  double square_sum = std::inner_product(vector_diff.begin(), vector_diff.end(), vector_diff.begin(), 0.0);
+  return std::sqrt(square_sum / (vector_in.size() - (vector_in.size() >= 2 ? 1 : 0)));
 }
 
 double mathToDegree(const double radian_in) {
