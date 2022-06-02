@@ -18,7 +18,7 @@ double mathAverage(const std::vector<double>& vector_in) {
 
 double mathDistanceAngular(const double pos_1, const double pos_2, const double modulus) {
   double value_out = (modulus * 1.5) + (pos_2 - pos_1);
-  value_out = mathModulus(value_out, modulus, false) - (modulus / 2.0);
+  value_out = mathModulus(value_out, modulus, true) - (modulus / 2.0);
   return value_out;
 }
 
